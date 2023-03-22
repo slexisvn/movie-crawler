@@ -1,0 +1,17 @@
+version: '3.6'
+services:
+  db:
+    image: mongo
+    restart: unless-stopped
+    ports:
+      - 27017:27017
+  backend:
+    image: crawler
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - 3001:3000
+    depends_on:
+      - db
+    restart: unless-stopped

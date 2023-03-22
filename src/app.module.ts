@@ -9,7 +9,7 @@ import { RevenueDay, RevenueDaySchema } from './schemas/revenueDay.schema';
   imports: [
     ScheduleModule.forRoot(),
     ConfigModule.forRoot(),
-    MongooseModule.forRoot(process.env.MONGO_URI),
+    MongooseModule.forRoot('mongodb://db:27017/crawler'),
     MongooseModule.forFeature([
       { name: RevenueDay.name, schema: RevenueDaySchema },
     ])

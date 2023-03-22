@@ -20,7 +20,16 @@ export class AppService {
   async handleCron() {
     try {
       this.logger.debug('Called when the minute is 5');
-      const browser = await puppeteer.launch();
+      this.logger.debug('Crawling ...');
+      const browser = await puppeteer.launch({
+        executablePath: '/usr/bin/google-chrome',
+        args: [
+          '--no-sandbox',
+          '--disable-setuid-sandbox',
+          '--disable-dev-shm-usage',
+          '--disable-gpu',
+        ]
+      });
       const page = await browser.newPage();
       await page.goto('https://boxofficevietnam.com/', {
         waitUntil: 'networkidle2',
@@ -47,6 +56,7 @@ export class AppService {
       await this.revenueDayModel.create(result);
       console.log(result);
       await browser.close();
+      this.logger.debug('Done!');
     } catch (err) {
       console.log(err);
     }
